@@ -7,12 +7,12 @@ VideoClipImporter:
   useLegacyImporter: 0
   quality: 0.5
   isColorLinear: 0
-  originalWidth: 853
+  originalWidth: 854
   originalHeight: 480
   frameRange: 0
   startFrame: -1
   endFrame: -1
-  frameCount: 811
+  frameCount: 824
   frameRate: 25
   colorSpace: 0
   deinterlace: 0
@@ -35,7 +35,7 @@ VideoClipImporter:
       bitrateMode: 1
       spatialQuality: 1
   output:
-    format: 0
+    format: 1
     settings:
       enableTranscoding: 1
       codec: 0
@@ -45,14 +45,14 @@ VideoClipImporter:
       customHeight: 480
       bitrateMode: 1
       spatialQuality: 1
-    encodedWidth: 639
+    encodedWidth: 640
     encodedHeight: 360
     encodedStartFrame: 0
-    encodedEndFrame: 811
+    encodedEndFrame: 824
     streamedResource:
       source: library/metadata/d6/d6b7c011ec5cb434d96e22f746e10d8f.resource
       offset: 0
-      size: 3536505
+      size: 4689121
   userData: 
   assetBundleName: 
   assetBundleVariant: 

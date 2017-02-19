@@ -5,14 +5,12 @@ using UnityEngine;
 public class EmmissionJitter : MonoBehaviour
 {
 
-	public AnimationCurve m_curve;
-
-
 	public float m_emissionScale = 1.0F;
 	public float m_speed = 1.0F;
+    public Color baseColor = Color.white;
 
-	Material m_mat;
-	Color baseColor = Color.white;
+    Material m_mat;
+	
 
 	// Use this for initialization
 	void Start ()
