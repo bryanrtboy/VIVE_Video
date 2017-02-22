@@ -5,6 +5,7 @@
 //=============================================================================
 
 using UnityEngine;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -26,52 +27,48 @@ namespace Valve.VR.InteractionSystem
 		private bool highlighted = false;
 
 		//-------------------------------------------------
-		public void Awake()
+		public void Awake ()
 		{
-			areaMesh = GetComponent<MeshRenderer>();
+			areaMesh = GetComponent<MeshRenderer> ();
 
-			tintColorId = Shader.PropertyToID( "_TintColor" );
+			tintColorId = Shader.PropertyToID ("_TintColor");
 
-			CalculateBounds();
+			CalculateBounds ();
 		}
 
 
 		//-------------------------------------------------
-		public void Start()
+		public void Start ()
 		{
-			visibleTintColor = Teleport.instance.areaVisibleMaterial.GetColor( tintColorId );
-			highlightedTintColor = Teleport.instance.areaHighlightedMaterial.GetColor( tintColorId );
-			lockedTintColor = Teleport.instance.areaLockedMaterial.GetColor( tintColorId );
+			visibleTintColor = Teleport.instance.areaVisibleMaterial.GetColor (tintColorId);
+			highlightedTintColor = Teleport.instance.areaHighlightedMaterial.GetColor (tintColorId);
+			lockedTintColor = Teleport.instance.areaLockedMaterial.GetColor (tintColorId);
 		}
 
 
 		//-------------------------------------------------
-		public override bool ShouldActivate( Vector3 playerPosition )
+		public override bool ShouldActivate (Vector3 playerPosition)
 		{
 			return true;
 		}
 
 
 		//-------------------------------------------------
-		public override bool ShouldMovePlayer()
+		public override bool ShouldMovePlayer ()
 		{
 			return true;
 		}
 
 
 		//-------------------------------------------------
-		public override void Highlight( bool highlight )
+		public override void Highlight (bool highlight)
 		{
-			if ( !locked )
-			{
+			if (!locked) {
 				highlighted = highlight;
 
-				if ( highlight )
-				{
+				if (highlight) {
 					areaMesh.material = Teleport.instance.areaHighlightedMaterial;
-				}
-				else
-				{
+				} else {
 					areaMesh.material = Teleport.instance.areaVisibleMaterial;
 				}
 			}
@@ -79,56 +76,48 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		public override void SetAlpha( float tintAlpha, float alphaPercent )
+		public override void SetAlpha (float tintAlpha, float alphaPercent)
 		{
-			Color tintedColor = GetTintColor();
+			Color tintedColor = GetTintColor ();
 			tintedColor.a *= alphaPercent;
-			areaMesh.material.SetColor( tintColorId, tintedColor );
+			areaMesh.material.SetColor (tintColorId, tintedColor);
 		}
 
 
 		//-------------------------------------------------
-		public override void UpdateVisuals()
+		public override void UpdateVisuals ()
 		{
-			if ( locked )
-			{
+			if (locked) {
 				areaMesh.material = Teleport.instance.areaLockedMaterial;
-			}
-			else
-			{
+			} else {
 				areaMesh.material = Teleport.instance.areaVisibleMaterial;
 			}
 		}
 
 
 		//-------------------------------------------------
-		public void UpdateVisualsInEditor()
+		public void UpdateVisualsInEditor ()
 		{
-			areaMesh = GetComponent<MeshRenderer>();
+			areaMesh = GetComponent<MeshRenderer> ();
 
-			if ( locked )
-			{
+			if (locked) {
 				areaMesh.sharedMaterial = Teleport.instance.areaLockedMaterial;
-			}
-			else
-			{
+			} else {
 				areaMesh.sharedMaterial = Teleport.instance.areaVisibleMaterial;
 			}
 		}
 
 
 		//-------------------------------------------------
-		private bool CalculateBounds()
+		private bool CalculateBounds ()
 		{
-			MeshFilter meshFilter = GetComponent<MeshFilter>();
-			if ( meshFilter == null )
-			{
+			MeshFilter meshFilter = GetComponent<MeshFilter> ();
+			if (meshFilter == null) {
 				return false;
 			}
 
 			Mesh mesh = meshFilter.sharedMesh;
-			if ( mesh == null )
-			{
+			if (mesh == null) {
 				return false;
 			}
 
@@ -138,20 +127,14 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		private Color GetTintColor()
+		private Color GetTintColor ()
 		{
-			if ( locked )
-			{
+			if (locked) {
 				return lockedTintColor;
-			}
-			else
-			{
-				if ( highlighted )
-				{
+			} else {
+				if (highlighted) {
 					return highlightedTintColor;
-				}
-				else
-				{
+				} else {
 					return visibleTintColor;
 				}
 			}
@@ -159,39 +142,35 @@ namespace Valve.VR.InteractionSystem
 	}
 
 
-#if UNITY_EDITOR
+	#if UNITY_EDITOR
 	//-------------------------------------------------------------------------
-	[CustomEditor( typeof( TeleportArea ) )]
+	[CustomEditor (typeof(TeleportArea))]
 	public class TeleportAreaEditor : Editor
 	{
 		//-------------------------------------------------
-		void OnEnable()
+		void OnEnable ()
 		{
-			if ( Selection.activeTransform != null )
-			{
-				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea>();
-				if ( teleportArea != null )
-				{
-					teleportArea.UpdateVisualsInEditor();
+			if (Selection.activeTransform != null) {
+				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea> ();
+				if (teleportArea != null) {
+					teleportArea.UpdateVisualsInEditor ();
 				}
 			}
 		}
 
 
 		//-------------------------------------------------
-		public override void OnInspectorGUI()
+		public override void OnInspectorGUI ()
 		{
-			DrawDefaultInspector();
+			DrawDefaultInspector ();
 
-			if ( Selection.activeTransform != null )
-			{
-				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea>();
-				if ( GUI.changed && teleportArea != null )
-				{
-					teleportArea.UpdateVisualsInEditor();
+			if (Selection.activeTransform != null) {
+				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea> ();
+				if (GUI.changed && teleportArea != null) {
+					teleportArea.UpdateVisualsInEditor ();
 				}
 			}
 		}
 	}
-#endif
+	#endif
 }
